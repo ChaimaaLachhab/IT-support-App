@@ -1,0 +1,7 @@
+export enum DefectStatus {
+  REPORTED = 'REPORTED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  RESOLVED= 'RESOLVED',
+  CLOSED = 'CLOSED',
+  ESCALATED = 'ESCALATED'
+}

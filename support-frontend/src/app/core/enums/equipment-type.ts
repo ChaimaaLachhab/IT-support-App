@@ -1,0 +1,8 @@
+export enum EquipmentType {
+  COMPUTER = 'COMPUTER',
+  PRINTER = 'PRINTER',
+  ROUTER = 'ROUTER',
+  SERVER = 'SERVER',
+  MOBILE_DEVICE = 'MOBILE_DEVICE',
+  OTHER = 'OTHER'
+}
