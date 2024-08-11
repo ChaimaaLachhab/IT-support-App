@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,9 @@ public abstract class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(getRole()));
+        DiscriminatorValue roleAnnotation = this.getClass().getAnnotation(DiscriminatorValue.class);
+        String roleName = roleAnnotation.value();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + roleName));
     }
 
     @Override
@@ -52,5 +54,4 @@ public abstract class User implements UserDetails {
         return true;
     }
 
-    public abstract String getRole();
 }

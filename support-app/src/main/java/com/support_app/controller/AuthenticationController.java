@@ -4,74 +4,74 @@ import com.support_app.dto.LoginUserDto;
 import com.support_app.dto.RegisterUserDto;
 import com.support_app.model.LoginResponse;
 import com.support_app.model.User;
-import com.support_app.sercvice.JwtService;
 import com.support_app.service.AuthenticationService;
+import com.support_app.service.JwtService;
+import com.support_app.exception.UserAlreadyExistsException;
+import com.support_app.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/auth")
 @RestController
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    private AuthenticationService authenticationService;
-
-    /**
-     * Inscription autonome pour les utilisateurs normaux.
-     * @param registerUserDto Les informations d'inscription.
-     * @return L'utilisateur enregistré.
-     */
-    @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
-        return ResponseEntity.ok(registeredUser);
+    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
+        this.jwtService = jwtService;
+        this.authenticationService = authenticationService;
     }
 
     /**
-     * Connexion d'un utilisateur.
-     * @param loginUserDto Les informations de connexion.
-     * @return La réponse de connexion contenant le token JWT.
+     * Registers a user of a specified type (regular, technician, admin).
+     * @param userType The type of user to be registered.
+     * @param registerUserDto The registration information.
+     * @return The registered user or an error message if the user already exists.
+     */
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PostMapping("/register/{userType}")
+    public ResponseEntity<?> registerUser(
+            @PathVariable("userType") String userType,
+            @RequestBody RegisterUserDto registerUserDto) {
+
+        try {
+            User registeredUser = authenticationService.signup(registerUserDto, userType);
+            return ResponseEntity.ok(registeredUser);
+        } catch (UserAlreadyExistsException ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        }
+    }
+
+    /**
+     * Authenticates a user.
+     * @param loginUserDto The login information.
+     * @return The login response containing the JWT token or an error message if authentication fails.
      */
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
+    public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto) {
+        try {
+            User authenticatedUser = authenticationService.authenticate(loginUserDto);
+            String role = authenticatedUser.getAuthorities().stream()
+                    .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+                    .findFirst()
+                    .orElse(null);
 
-        String jwtToken = jwtService.generateToken(authenticatedUser);
+            String jwtToken = jwtService.generateToken(authenticatedUser, role);
 
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(jwtToken);
-        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setToken(jwtToken);
+            loginResponse.setExpiresIn(jwtService.getExpirationTime());
 
-        return ResponseEntity.ok(loginResponse);
+            return ResponseEntity.ok(loginResponse);
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during login.");
+        }
     }
-
-    /**
-     * Ajout d'un technicien par un administrateur supérieur.
-     * @param registerUserDto Les informations de l'utilisateur à ajouter.
-     * @return Le technicien ajouté.
-     */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/admin/add-technician")
-    public ResponseEntity<User> addTechnician(@RequestBody RegisterUserDto registerUserDto) {
-        User newTechnician = authenticationService.addTechnician(registerUserDto);
-        return ResponseEntity.ok(newTechnician);
-    }
-
-    /**
-     * Ajout d'un administrateur par un administrateur supérieur.
-     * @param registerUserDto Les informations de l'utilisateur à ajouter.
-     * @return L'administrateur ajouté.
-     */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/admin/add-admin")
-    public ResponseEntity<User> addAdmin(@RequestBody RegisterUserDto registerUserDto) {
-        User newAdmin = authenticationService.addAdmin(registerUserDto);
-        return ResponseEntity.ok(newAdmin);
-    }
-
 }

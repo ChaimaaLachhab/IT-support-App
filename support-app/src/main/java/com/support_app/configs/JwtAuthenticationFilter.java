@@ -1,7 +1,6 @@
 package com.support_app.configs;
 
-import com.support_app.model.AdministrateurIT;
-import com.support_app.sercvice.JwtService;
+import com.support_app.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,8 +62,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             }
-
             filterChain.doFilter(request, response);
+            System.out.println("done");
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
