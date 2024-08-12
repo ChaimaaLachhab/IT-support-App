@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './create-equipment.component.css'
 })
 export class CreateEquipmentComponent {
+
 
 }

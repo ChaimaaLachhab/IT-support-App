@@ -4,14 +4,14 @@ services:
     build: .
     restart: always
     ports:
-     - 8080:8080
+     - "8080:8080"
     depends_on:
     - mysqldb
   mysqldb:
     image: "mysql:latest"
     restart: always
     ports:
-    - 3307:3306
+    - "3307:3306"
     environment:
       MYSQL_DATABASE: supports_its_db
       MYSQL_ROOT_PASSWORD: 1234

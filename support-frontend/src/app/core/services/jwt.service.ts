@@ -8,16 +8,15 @@ export class JwtService {
 
   decodeToken(token: string): any {
     return jwtDecode(token);
-
-  }
-
-  getUsernameFromToken(token: string) {
-    const decodedToken = this.decodeToken(token);
-    return decodedToken?.sub || null;
   }
 
   getUserRole(token: string) {
     const decodedToken = this.decodeToken(token);
     return decodedToken?.role ;
+  }
+
+  getUsernameFromToken(token: string) {
+    const decodedToken = this.decodeToken(token);
+    return decodedToken?.sub || null;
   }
 }

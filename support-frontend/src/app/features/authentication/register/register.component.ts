@@ -3,12 +3,29 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { RegisterUserDto } from '../../../core/dtos/register-user-dto.dto';
+import {RouterLink, RouterOutlet} from "@angular/router";
+import {MatCard, MatCardContent} from "@angular/material/card";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatAnchor, MatButton} from "@angular/material/button";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterOutlet,
+    MatCard,
+    MatCardContent,
+    RouterLink,
+    MatLabel,
+    MatFormField,
+    MatInput,
+    MatAnchor,
+    MatButton,
+    MatSelect,
+    MatOption
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
