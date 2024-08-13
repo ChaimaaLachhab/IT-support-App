@@ -1,5 +1,6 @@
 package com.support_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.support_app.enums.SpecializedFieldType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +19,7 @@ public class ITTechnician extends User {
 //    private SpecializedFieldType specializedField;
 
     @OneToMany(mappedBy = "technician")
+    @JsonIgnore
     private List<SupportTicket> ticketDeSupports;
 
 }

@@ -77,6 +77,10 @@ public class SupportTicketService {
         return supportTicketRepository.findByTechnicianId(technicianId);
     }
 
+    public List<SupportTicket> getAllTickets() {
+        return supportTicketRepository.findAll();
+    }
+
     /**
      * Retrieves all support tickets created by a specific user.
      *

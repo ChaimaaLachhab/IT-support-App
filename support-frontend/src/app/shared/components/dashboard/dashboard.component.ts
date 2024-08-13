@@ -1,21 +1,24 @@
-import { Component, NgModule } from '@angular/core';
-import {HeaderComponent} from "../header/header.component";
+import { Component } from '@angular/core';
+import {Route, RouterOutlet} from "@angular/router";
+import {TicketListComponent} from "../../../features/support-ticket-management/ticket-list/ticket-list.component";
 import {SidebarComponent} from "../sidebar/sidebar.component";
-import {StatisticsDashboardComponent} from "./statistics-dashboard/statistics-dashboard.component";
-import {RouterOutlet} from "@angular/router";
-import { CommonModule } from "@angular/common";
+import {DHomeComponent} from "./d-home/d-home.component";
+import {DViewsComponent} from "./d-views/d-views.component";
+
 
 @Component({
   selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
   standalone: true,
   imports: [
-    HeaderComponent,
+    RouterOutlet,
+    TicketListComponent,
+    TicketListComponent,
     SidebarComponent,
-    StatisticsDashboardComponent,
-    RouterOutlet
+    DHomeComponent,
+    DViewsComponent
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
 

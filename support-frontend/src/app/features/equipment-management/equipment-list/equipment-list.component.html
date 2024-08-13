@@ -1,1 +1,43 @@
-<p>equipment-list works!</p>
+<!-- equipment-list.component.html -->
+<div class="equipment-list-container">
+  <div class="header">
+    <h1>Equipment Management</h1>
+    <button pButton type="button" label="Add Equipment" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreate()"></button>
+  </div>
+
+  <p-table #dt [value]="equipments" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+           [globalFilterFields]="['name','status','userId']">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="m-0">Manage Equipments</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+        <th pSortableColumn="userId">User ID <p-sortIcon field="userId"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-equipment>
+      <tr>
+        <td>{{equipment.name}}</td>
+        <td>{{equipment.status}}</td>
+        <td>{{equipment.user.id}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editEquipment(equipment)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="confirmDelete(equipment)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-toast></p-toast>

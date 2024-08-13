@@ -33,7 +33,7 @@ export class EquipmentService {
     return this.http.get<Equipment[]>(`${this.apiUrl}/getAll`);
   }
 
-  getAllEquipmentsByUser(user: RegularUser): Observable<Equipment[]> {
+  getAllEquipmentsByUser(): Observable<Equipment[]> {
     return this.http.get<Equipment[]>(`${this.apiUrl}/getAllByUser`);
   }
 

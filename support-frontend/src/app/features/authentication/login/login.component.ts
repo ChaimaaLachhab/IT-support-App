@@ -68,7 +68,7 @@ export class LoginComponent {
               if (role === 'ADMIN') {
                 this.router.navigate(['/dashboard']);
               } else if (role === 'TECH' || role === 'USER') {
-                this.router.navigate(['/home']);
+                this.router.navigate(['/dashboard']);
               } else {
                 console.error('Unknown role:', role);
               }

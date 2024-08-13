@@ -1,0 +1,38 @@
+<section class="ticket-section">
+  <h1 class="section-title">All unsolved tickets (4)</h1>
+  <div class="ticket-actions">
+    <form class="search-form">
+      <label for="search-input" class="visually-hidden">Search tickets</label>
+      <input type="search" (input)="dt.filterGlobal($any($event.target).value, 'contains')" id="search-input" placeholder="Search..." class="search-input" />
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d803074ad70994930af909f3aa0a0176a45a54c4271f650883188ba690745567?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="search-icon" />
+    </form>
+  </div>
+  <p-table #dt [value]="tickets" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+           [globalFilterFields]="['name','status','userId']" class="ticket-table">
+    <ng-template pTemplate="header">
+    <tr>
+      <th class="status-column"></th>
+      <th pSortableColumn="name">Requester <p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="name">Assignee <p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="name">Date <p-sortIcon field="name"></p-sortIcon></th>
+      <th>Actions</th>
+
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ticket>
+    <tr>
+      <td>{{ticket.status}}</td>
+      <td>{{ticket.status}}</td>
+      <td>{{ticket.date}}</td>
+      <td>
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editEquipment(ticket)"></button>
+      </td>
+
+    </tr>
+    </ng-template>
+  </p-table>
+
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  <p-toast></p-toast>
+</section>

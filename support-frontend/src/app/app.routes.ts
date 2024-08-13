@@ -3,10 +3,12 @@ import {DashboardComponent} from "./shared/components/dashboard/dashboard.compon
 import {LandingPageComponent} from "./layout/landing-page/landing-page.component";
 import {LoginComponent} from "./features/authentication/login/login.component";
 import {RegisterComponent} from "./features/authentication/register/register.component";
+import {EquipmentListComponent} from "./features/equipment-management/equipment-list/equipment-list.component";
 
 export const routes: Routes = [
 
   { path: 'landingPage', component: LandingPageComponent },
+  { path: 'equipment', component: EquipmentListComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

@@ -26,13 +26,18 @@ export class SupportTicketService {
     return this.http.post<void>(`${this.apiUrl}/assign`, dto);
   }
 
+  getAllTickets(): Observable<SupportTicket[]> {
+    return this.http.get<SupportTicket[]>(`${this.apiUrl}/all`);
+  }
+
   getTicketsByTechnician(technicianId: number): Observable<SupportTicket[]> {
     return this.http.get<SupportTicket[]>(`${this.apiUrl}/technician/${technicianId}`);
   }
 
-  getTicketsByUser(userId: number): Observable<SupportTicket[]> {
+  getTicketsByUser(): Observable<SupportTicket[]> {
     return this.http.get<SupportTicket[]>(`${this.apiUrl}/user/all`);
   }
+
 
   getTicketById(ticketId: number): Observable<SupportTicket> {
     return this.http.get<SupportTicket>(`${this.apiUrl}/${ticketId}`);

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/support-tickets")
 public class SupportTicketController {
 
@@ -64,6 +65,13 @@ public class SupportTicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("/all")
+    public ResponseEntity<List<SupportTicket>> getAllTickets() {
+        List<SupportTicket> tickets = supportTicketService.getAllTickets();
+        return ResponseEntity.ok(tickets);
+    }
+
     /**
      * Retrieves all support tickets created by the authenticated user.
      *
@@ -73,9 +81,11 @@ public class SupportTicketController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_TECH')")
     @GetMapping("/user/all")
     public ResponseEntity<List<SupportTicket>> getTicketsByUser(@AuthenticationPrincipal RegularUser user) {
+        System.out.println("Authenticated user roles: " + user.getAuthorities());
         List<SupportTicket> tickets = supportTicketService.getTicketsByUser(user.getId());
         return ResponseEntity.ok(tickets);
     }
+
 
     /**
      * Retrieves the details of a support ticket by its ID.

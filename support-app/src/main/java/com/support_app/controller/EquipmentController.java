@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/equipments")
 public class EquipmentController {
 
@@ -79,7 +80,7 @@ public class EquipmentController {
      * @param user The authenticated RegularUser.
      * @return A ResponseEntity containing a list of Equipment entities associated with the user.
      */
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/getAllByUser")
     public ResponseEntity<List<Equipment>> getAllEquipmentsByUser(@AuthenticationPrincipal RegularUser user) {
         List<Equipment> equipments = equipmentService.getAllEquipmentsByUser(user);
