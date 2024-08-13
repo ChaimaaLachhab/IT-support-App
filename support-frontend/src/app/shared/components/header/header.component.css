@@ -1,0 +1,15 @@
+.main-container {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+@media (max-width: 991px) {
+  .main-container {
+    max-width: 100%;
+  }
+}

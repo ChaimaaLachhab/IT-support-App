@@ -1,0 +1,68 @@
+.sidebar {
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  padding: 16px 12px 598px;
+  font: 400 11px/1 Manrope, sans-serif;
+}
+
+.logo {
+  aspect-ratio: 0.89;
+  object-fit: contain;
+  width: 42px;
+}
+
+.sidebar-menu {
+  display: flex;
+  margin-top: 44px;
+  min-height: 462px;
+  width: 56px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-icon {
+  aspect-ratio: 1;
+  object-fit: contain;
+  width: 100%;
+  border-radius: 4px;
+  margin-top: 25px;
+}
+
+.notification-badge {
+  border-radius: 4px;
+  display: flex;
+  margin-top: 25px;
+  min-height: 56px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 29px 7px 7px;
+}
+
+.notification-count {
+  border-radius: 9px;
+  background-color: #de3b40;
+  min-height: 20px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    padding-bottom: 100px;
+    display: none;
+  }
+
+  .sidebar-menu {
+    margin-top: 40px;
+  }
+}

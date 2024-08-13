@@ -1,0 +1,23 @@
+.create-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 19px;
+  min-height: 44px;
+  border-radius: 4px;
+  background-color: #6D31ED;
+  color: #FFFFFF;
+  font: 400 16px/2 Manrope, sans-serif;
+  border: none;
+  cursor: pointer;
+}
+
+.create-button__icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.create-button__text {
+  white-space: nowrap;
+}

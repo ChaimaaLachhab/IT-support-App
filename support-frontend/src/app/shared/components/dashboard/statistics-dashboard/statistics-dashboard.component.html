@@ -1,0 +1,146 @@
+<main class="dashboard">
+  <header class="dashboard-header">
+    <h1 class="dashboard-title">Statistics</h1>
+    <div class="date-picker">
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/54e7488f9bef9e894d8bfdaf920d3727036a674df6edc4dfc38910e43ed457d6?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="date-picker-icon" />
+      <span class="date-range">Jul 13, 2022 - Jul 20, 2022</span>
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c1d9a6b2d71946d5ec69fce81929d1931897a6e61db72ab2ac553f35ceb1b561?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="dropdown-icon" />
+    </div>
+  </header>
+
+  <section class="statistics-grid">
+    <article class="stat-card total-tickets">
+      <div class="stat-content">
+        <h2 class="stat-title">Total tickets solved</h2>
+        <p class="stat-value">164</p>
+        <p class="stat-change positive">
+          <span class="change-value">+15%</span> from last week
+        </p>
+      </div>
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ee69ef1d22fe700fb6a43052aeae7d9ac6f1a548522cba304a8826950f6ae20?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="stat-icon" />
+    </article>
+
+    <article class="stat-card good-tickets">
+      <div class="stat-content">
+        <h2 class="stat-title">Good tickets</h2>
+        <p class="stat-value">159</p>
+        <p class="stat-change positive">
+          <span class="change-value">+32%</span> from last week
+        </p>
+      </div>
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/18f32000d0e32cac7bde0da59235eac5d2a2ab241b79104611cc015b76c0dc76?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="stat-icon" />
+    </article>
+
+    <article class="stat-card bad-tickets">
+      <div class="stat-content">
+        <h2 class="stat-title">Bad tickets</h2>
+        <p class="stat-value">5</p>
+        <p class="stat-change negative">
+          <span class="change-value">-54%</span> from last week
+        </p>
+      </div>
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ccacc750840be90566121798f9fba800dfadd34a3d756d44eda4a65a4a50a87d?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="stat-icon" />
+    </article>
+  </section>
+
+  <section class="tickets-section">
+    <h2 class="section-title">My tickets</h2>
+    <div class="tickets-header">
+      <div class="tickets-info">
+        <h3 class="tickets-status">Unassigned (3)</h3>
+        <span class="selected-count">(1) selected</span>
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/521315580c88b43814801b1543caa1139c74d875298da9d0e69bd0a9f8638ab4?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="divider" />
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/226d1137226a8e603e3df8adec54a17eb0ab9d8e916064a5aeab8f626a041ad5?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="action-icon" />
+      </div>
+      <div class="tickets-actions">
+        <button class="action-button" aria-label="Add ticket">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ad0f3f4898d922e449e2cad493894798847dc73d95b15bfc7b8f25a951ff9506?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="add-icon" />
+        </button>
+        <div class="sort-dropdown">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6c79e68c0aa0f9c17cd0ae052e0961862a6b8e901b7dcad2e170f9fc59b4998f?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="sort-icon" />
+          <span class="sort-label">Sort: Last updated</span>
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/37cfec37e01d8bfe1d74f038aa40d33cd0e338971dbd5dfbe5843eed4f79e8f8?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="dropdown-icon" />
+        </div>
+      </div>
+    </div>
+
+    <table class="tickets-table">
+      <thead>
+      <tr>
+        <th><input type="checkbox" aria-label="Select all tickets" /></th>
+        <th></th>
+        <th>ID</th>
+        <th>Subject</th>
+        <th>Requester</th>
+        <th>Channel</th>
+        <th>Type</th>
+        <th>Assignee</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><input type="checkbox" aria-label="Select ticket" /></td>
+        <td><span class="ticket-status new">New</span></td>
+        <td>#1147</td>
+        <td>Replacement Policy</td>
+        <td>Isabella W</td>
+        <td>Web form</td>
+        <td>--</td>
+        <td>--</td>
+        <td>Jul 21</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="tickets-section">
+    <div class="tickets-header">
+      <h3 class="tickets-status">Assigned (29)</h3>
+      <div class="tickets-actions">
+        <button class="action-button" aria-label="Add ticket">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/0c24fe72ac0234c0e9643e6019ab18b425fca1dcab4315c4819a7502fbe92993?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="add-icon" />
+        </button>
+        <div class="sort-dropdown">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6c79e68c0aa0f9c17cd0ae052e0961862a6b8e901b7dcad2e170f9fc59b4998f?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="sort-icon" />
+          <span class="sort-label">Sort: Last updated</span>
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/37cfec37e01d8bfe1d74f038aa40d33cd0e338971dbd5dfbe5843eed4f79e8f8?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="dropdown-icon" />
+        </div>
+      </div>
+    </div>
+
+    <table class="tickets-table">
+      <thead>
+      <tr>
+        <th><input type="checkbox" aria-label="Select all tickets" /></th>
+        <th></th>
+        <th>ID</th>
+        <th>Subject</th>
+        <th>Requester</th>
+        <th>Channel</th>
+        <th>Group</th>
+        <th>Assignee</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><input type="checkbox" aria-label="Select ticket" /></td>
+        <td><span class="ticket-status open">Open</span></td>
+        <td>#1129</td>
+        <td>Return</td>
+        <td>Matthew M</td>
+        <td>Web form</td>
+        <td>Support</td>
+        <td>Monica H</td>
+        <td>Jul 21</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="dashboard-footer">
+    <p class="last-activity">Last activity: 1 minute ago</p>
+  </footer>
+</main>
+<router-outlet/>

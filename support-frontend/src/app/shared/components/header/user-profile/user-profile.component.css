@@ -1,0 +1,38 @@
+.user-profile {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.user-profile__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  object-fit: cover;
+}
+
+.user-profile__details {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.user-profile__name-status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 155px;
+}
+
+.user-profile__name,
+.user-profile__status {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.user-profile__action {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
