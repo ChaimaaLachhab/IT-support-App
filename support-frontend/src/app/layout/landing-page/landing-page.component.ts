@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import {FooterComponent} from "../../shared/components/footer/footer.component";
 import {NgForOf, NgOptimizedImage} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {HeaderOneComponent} from "./header-one/header-one.component";
+import {FooterComponent} from "./footer/footer.component";
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
   imports: [
-    FooterComponent,
     NgOptimizedImage,
     RouterLink,
     HeaderOneComponent,
-    NgForOf
+    NgForOf,
+    FooterComponent,
+
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
@@ -27,6 +28,10 @@ export class LandingPageComponent {
   }
 
   constructor(private router: Router) {}
+
+  login(){
+    this.router.navigate(['/login'])
+  }
 
   features = [
     {

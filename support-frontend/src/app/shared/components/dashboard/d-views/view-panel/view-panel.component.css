@@ -118,6 +118,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 18px 0;
+  height: 90vh;
   width: 100%;
 }
 
@@ -165,6 +166,11 @@
   color: #565d6d;
   text-decoration: none;
   font: 400 14px/2 Manrope, sans-serif;
+}
+
+.view-item i{
+  font-size: 1.5rem;
+
 }
 
 .view-item.active {

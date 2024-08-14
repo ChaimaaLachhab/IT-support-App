@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { RegisterUserDto } from '../../../core/dtos/register-user-dto.dto';
-import {RouterLink, RouterOutlet} from "@angular/router";
-import {MatCard, MatCardContent} from "@angular/material/card";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
-import {MatAnchor, MatButton} from "@angular/material/button";
-import {MatOption, MatSelect} from "@angular/material/select";
+import { RouterLink, RouterOutlet} from "@angular/router";
+import { MatCard, MatCardContent} from "@angular/material/card";
+import { MatFormField, MatLabel} from "@angular/material/form-field";
+import { MatInput} from "@angular/material/input";
+import { MatAnchor, MatButton} from "@angular/material/button";
+import { MatOption, MatSelect} from "@angular/material/select";
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-register',
@@ -34,7 +35,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
 
   constructor(
-
+    private location: Location,
     private fb: FormBuilder,
     private authService: AuthenticationService
   ) {
@@ -58,11 +59,9 @@ export class RegisterComponent {
       this.authService.registerUser(formValues.userType, registerUserDto).subscribe({
         next: (response) => {
           console.log('Registration successful:', response);
-          // Gérer la navigation ou les messages de succès ici
-        },
+          this.location.back();        },
         error: (err) => {
           console.error('Registration failed:', err);
-          // Gérer les erreurs ici
         }
       });
     }

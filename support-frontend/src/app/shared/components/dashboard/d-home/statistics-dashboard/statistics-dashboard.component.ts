@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {SidebarComponent} from "../../../sidebar/sidebar.component";
 import {RouterOutlet} from "@angular/router";
 import {TicketListComponent} from "../../../../../features/support-ticket-management/ticket-list/ticket-list.component";
+import {SidebarComponent} from "../../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-statistics-dashboard',

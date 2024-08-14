@@ -1,0 +1,65 @@
+.sidebar {
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+  display: flex;
+  max-width: 89px;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px 331px;
+  height: 100vh;
+  box-sizing: border-box;
+
+}
+
+.logo {
+  aspect-ratio: 0.89;
+  object-fit: contain;
+  width: 42px;
+}
+
+.sidebar-menu {
+  display: flex;
+  margin-top: 44px;
+  min-height: 462px;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-item {
+  margin-top: 25px;
+}
+
+.menu-item:first-child {
+  margin-top: 0;
+}
+
+.menu-icon {
+  aspect-ratio: 1;
+  object-fit: contain;
+  width: 100%;
+  border-radius: 4px;
+}
+
+/* Style pour l'état normal des liens */
+.menu-item {
+  display: block;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+}
+
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+  color: #007BFF;
+}
+
+/* Effet de sélection */
+.menu-item:active {
+  background-color: #e0e0e0;
+  color: #0056b3;
+}
+
+

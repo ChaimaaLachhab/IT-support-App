@@ -14,35 +14,8 @@
   font: 400 14px/2 Manrope, sans-serif;
 }
 
-.nav-menu {
-  display: flex;
-  align-items: center;
-}
-
-.nav-list {
-  display: flex;
-  list-style-type: none;
-  gap: 20px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-}
-
-.nav-link {
-  color: #000;
-  text-decoration: none;
-}
-
-.nav-icon {
-  width: 24px;
-  height: 24px;
-  margin-left: 8px;
-}
-
 .logo {
-  max-width: 144px;
+  max-width: 100rem;
 }
 
 .header-actions {

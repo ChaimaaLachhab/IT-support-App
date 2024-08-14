@@ -27,35 +27,36 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginUserDto);
   }
 
+  logout(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/login'])
+  }
+
+  private currentUserSubject = new BehaviorSubject<any>(this.decodeToken(localStorage.getItem('token')));
+  currentUser$ = this.currentUserSubject.asObservable();
+
   getCurrentUserRole(): string | null {
     const token = localStorage.getItem('token');
     if (token) {
-      const decodedToken = this.jwtService.decodeToken(token);
-      return decodedToken?.roles || null;
+      const decodedToken = this.decodeToken(token);
+      return decodedToken?.role || null;
     }
     return null;
   }
-
-  private currentUserSubject = new BehaviorSubject<any>(
-    JSON.parse(localStorage.getItem('token') || 'null')
-  );
-  currentUser$ = this.currentUserSubject.asObservable();
 
   isLoggedIn(): boolean {
     return !!this.currentUserSubject.value;
   }
 
   hasRole(role: string): boolean {
-    const currentUser = this.currentUserSubject.value;
-
-    if (currentUser && currentUser.roles) {
-      return currentUser.roles.some((r: any) => r.authority === role);
-    }
-    return false;
+    const currentUserRole = this.getCurrentUserRole();
+    return currentUserRole === role;
   }
 
-  logout(){
-    localStorage.removeItem('token')
-    this.router.navigate(['/login'])
+  private decodeToken(token: string | null): any {
+    if (token) {
+      return this.jwtService.decodeToken(token);
+    }
+    return null;
   }
 }

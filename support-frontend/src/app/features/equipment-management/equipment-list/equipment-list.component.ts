@@ -1,3 +1,4 @@
+
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -10,6 +11,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import {Equipment} from "../../../core/models/equipment.model";
 import {Ripple} from "primeng/ripple";
+import {PaginatorModule} from "primeng/paginator";
+import {EquipmentStatus} from "../../../core/enums/equipment-status";
+import {TagModule} from "primeng/tag";
+import {EquipmentType} from "../../../core/enums/equipment-type";
+import {UpdateEquipmentStatusDto} from "../../../core/dtos/update-equipment-status-dto.dto";
+
 
 @Component({
   selector: 'app-equipment-list',
@@ -22,7 +29,9 @@ import {Ripple} from "primeng/ripple";
     InputTextModule,
     ToastModule,
     ConfirmDialogModule,
-    Ripple
+    Ripple,
+    PaginatorModule,
+    TagModule
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './equipment-list.component.html',
@@ -32,6 +41,8 @@ export class EquipmentListComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   equipments: Equipment[] = [];
+  statuses = Object.values(EquipmentStatus);
+  clonedEquipment: { [s: string]: Equipment } = {};
 
   constructor(
     private equipmentService: EquipmentService,
@@ -44,19 +55,70 @@ export class EquipmentListComponent implements OnInit {
     this.loadEquipments();
   }
 
+  onNumber() : number{
+    return this.equipments.length;
+  }
+
   loadEquipments(): void {
     this.equipmentService.getAllEquipments().subscribe({
       next: equipments => this.equipments = equipments,
-      error: () => this.showError('Failed to load equipments')
+      error: () => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to load equipments' })
+
     });
   }
 
-  navigateToCreate(): void {
-    this.router.navigate(['/equipment/new']);
+  onRowEditInit(equipment: Equipment) {
+    this.clonedEquipment[equipment.id] = { ...equipment };
   }
 
-  editEquipment(equipment: Equipment): void {
-    this.router.navigate(['/equipment/edit', equipment.id]);
+  onRowEditSave(equipment: Equipment) {
+    if (equipment.id > 0) {
+      const dto: UpdateEquipmentStatusDto = {
+        id: equipment.id,
+        status: equipment.status
+      };
+
+      this.equipmentService.updateEquipment(dto).subscribe({
+        next: (updatedEquipment) => {
+          this.equipments[this.equipments.findIndex(e => e.id === equipment.id)] = updatedEquipment;
+          delete this.clonedEquipment[equipment.id];
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Equipment is updated' });
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update equipment' });
+          this.onRowEditCancel(equipment, this.equipments.findIndex(e => e.id === equipment.id));
+        }
+      });
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid Equipment' });
+    }
+  }
+
+  onRowEditCancel(equipment: Equipment, index: number) {
+    this.equipments[index] = this.clonedEquipment[equipment.id];
+    delete this.clonedEquipment[equipment.id];
+  }
+
+  getSeverity(status: EquipmentStatus): 'success' | 'secondary' | 'info' | 'warning' | 'danger' | undefined {
+    switch (status) {
+      case EquipmentStatus.ACTIVE:
+        return 'success';
+      case EquipmentStatus.INACTIVE:
+        return 'secondary';
+      case EquipmentStatus.UNDER_MAINTENANCE:
+        return 'warning';
+      case EquipmentStatus.RETIRED:
+        return 'info';
+      case EquipmentStatus.BROKEN:
+        return 'danger';
+      default:
+        return undefined;
+    }
+  }
+
+
+  navigateToCreate(): void {
+    this.router.navigate(['/add-equipment']);
   }
 
   confirmDelete(equipment: Equipment): void {

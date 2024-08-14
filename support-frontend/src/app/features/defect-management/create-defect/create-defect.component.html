@@ -1,1 +1,26 @@
-<p>create-defect works!</p>
+<form [formGroup]="createDefectForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="description">Defect Description:</label>
+    <input id="description" formControlName="description" type="text">
+  </div>
+
+  <div>
+    <label for="type">Defect Type:</label>
+    <select id="type" formControlName="type">
+      <option *ngFor="let type of defectsTypes" [value]="type">
+        {{ type }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="priority">Defect Priority:</label>
+    <select id="priority" formControlName="priority">
+      <option *ngFor="let priority of defectsPriority" [value]="priority">
+        {{ priority }}
+      </option>
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="createDefectForm.invalid">Submit</button>
+</form>

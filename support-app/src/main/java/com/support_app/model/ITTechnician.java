@@ -18,7 +18,7 @@ public class ITTechnician extends User {
 //    @Enumerated(EnumType.STRING)
 //    private SpecializedFieldType specializedField;
 
-    @OneToMany(mappedBy = "technician")
+    @OneToMany(mappedBy = "technician" , cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<SupportTicket> ticketDeSupports;
 

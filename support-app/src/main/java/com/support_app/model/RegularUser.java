@@ -15,11 +15,11 @@ import java.util.List;
 @DiscriminatorValue("USER")
 public class RegularUser extends User {
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<SupportTicket> ticketDeSupports;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Equipment> equipment;
 

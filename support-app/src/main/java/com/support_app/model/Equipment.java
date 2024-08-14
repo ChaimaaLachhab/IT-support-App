@@ -28,14 +28,14 @@ public class Equipment {
     @Enumerated(EnumType.STRING)
     private EquipmentStatus status;
 
-    @OneToMany(mappedBy = "equipment")
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<SupportTicket> supportTickets;
 
     @ManyToOne
     private RegularUser user;
 
-    @OneToMany(mappedBy = "equipment")
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<DefectHistory> history;
 }

@@ -10,6 +10,6 @@ import lombok.*;
 public class CreateEquipmentDto {
     private String name;
     private EquipmentType type;
-    private EquipmentStatus status = EquipmentStatus.ACTIVE;
+    private EquipmentStatus status;
     private Long userId;
 }

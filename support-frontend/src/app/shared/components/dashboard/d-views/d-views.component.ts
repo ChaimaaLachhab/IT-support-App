@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import {ViewPanelComponent} from "./view-panel/view-panel.component";
 import {TicketSectionComponent} from "./ticket-section/ticket-section.component";
-import { EquipmentListComponent} from "../../../../features/equipment-management/equipment-list/equipment-list.component";
+import {AssignedTicketComponent} from "./ticket-section/assigned-ticket/assigned-ticket.component";
+import {ClosedTicketComponent} from "./ticket-section/closed-ticket/closed-ticket.component";
+import {
+  CreateEquipmentComponent
+} from "../../../../features/equipment-management/create-equipment/create-equipment.component";
 
 @Component({
   selector: 'app-d-views',
@@ -9,7 +13,9 @@ import { EquipmentListComponent} from "../../../../features/equipment-management
   imports: [
     ViewPanelComponent,
     TicketSectionComponent,
-    EquipmentListComponent
+    AssignedTicketComponent,
+    ClosedTicketComponent,
+    CreateEquipmentComponent
   ],
   templateUrl: './d-views.component.html',
   styleUrl: './d-views.component.css'

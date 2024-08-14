@@ -1,0 +1,72 @@
+<section class="content-wrapper">
+  <section class="profile-gallery"  style="margin-bottom:20px;">
+    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a938811ee14435a0130cb2fc9f7e527baa5aa9d8aff2506d3d3eb47d43e7a9f6?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="profile-image profile-image-large" />
+    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/8d34f7c0c9e980c87a71eb2c763821be86458532d91d60df630056664f57cca5?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="profile-image profile-image-medium" />
+    <div class="image-container">
+      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/921f14f0eb52cc96019151b10305d7a753a04e4c1344ccb5ff56ea49b9991154?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="profile-image profile-image-small" />
+      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/823ea490cbc2d4a6e71937bf5304a7cdc4190206fad5a818dc98aeab0b152083?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="profile-image profile-image-extra-large" />
+    </div>
+  </section>
+  <div class="customer-section">
+    <h1 class="section-title">Customers</h1>
+    <div class="action-buttons">
+      <button class="btn btn-secondary">Import list</button>
+      <button class="btn btn-primary">Add customer</button>
+    </div>
+  </div>
+  <div class="search-container">
+    <div class="search-wrapper">
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e6310c6ad62c673dec1a55f361b9e798596f13a2ebc1dd55b7c7d72819025075?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="search-icon" />
+      <input type="text" placeholder="Search..." class="search-input" aria-label="Search customers" />
+    </div>
+    <div class="filter-actions">
+      <button class="btn btn-icon" aria-label="Filter">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/0f3bb5282df9ad57d0658942dfd6b2f75c684ad36db8a9a88b84a765c6d83107?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" />
+      </button>
+      <button class="btn btn-dropdown">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b8b83169a81e27c7c7ec82675ebf7b8e2bd857c170bf4477b07021add09fe0e?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="dropdown-icon" />
+        Sort: Last updated
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/294e86161cdadbfd274e23e62f052259914d881854df66bfae5218c28e3e783e?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="dropdown-arrow" />
+      </button>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="customer-table">
+      <thead>
+      <tr>
+        <th class="checkbox-column"><input type="checkbox" aria-label="Select all customers" /></th>
+        <th>All customer (4618)</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Tags</th>
+        <th>Last contacted</th>
+        <th class="actions-column"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let customer of customers">
+        <td class="checkbox-column"><input type="checkbox" [attr.aria-label]="'Select ' + customer.name" /></td>
+        <td>
+          <div class="customer-info">
+            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/88cd46f560f55a2ab9c717d1e59292ee91cf608d8220bbef326c60e3d7ba8775?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="customer-avatar" />
+            <span>{{ customer.name }}</span>
+          </div>
+        </td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>
+          <div class="tag-container">
+            <span *ngFor="let tag of customer.tags" class="tag">{{ tag }}</span>
+          </div>
+        </td>
+        <td>{{ customer.lastContacted }}</td>
+        <td class="actions-column">
+          <button class="btn btn-icon" aria-label="More options">
+            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcad27b020c5e714ff7e2af97708a455cfe4408bf686e8d5206c8274f13651bf?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" />
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

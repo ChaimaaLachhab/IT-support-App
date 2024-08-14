@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import {Route, RouterOutlet} from "@angular/router";
+import {Route, Router, RouterOutlet} from "@angular/router";
 import {TicketListComponent} from "../../../features/support-ticket-management/ticket-list/ticket-list.component";
-import {SidebarComponent} from "../sidebar/sidebar.component";
 import {DHomeComponent} from "./d-home/d-home.component";
 import {DViewsComponent} from "./d-views/d-views.component";
+import {SidebarComponent} from "./sidebar/sidebar.component";
+import {DUserComponent} from "./d-user/d-user.component";
+import {DEquipmentComponent} from "./d-equipment/d-equipment.component";
+import {DDefectComponent} from "./d-defect/d-defect.component";
 
 
 @Component({
@@ -16,10 +19,25 @@ import {DViewsComponent} from "./d-views/d-views.component";
     TicketListComponent,
     SidebarComponent,
     DHomeComponent,
-    DViewsComponent
+    DViewsComponent,
+    DUserComponent,
+    DEquipmentComponent,
+    DEquipmentComponent,
+    DDefectComponent,
+
   ],
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
 
+  constructor(private router:Router) {}
+
+  register(){
+    this.router.navigate(['/register'])
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 }

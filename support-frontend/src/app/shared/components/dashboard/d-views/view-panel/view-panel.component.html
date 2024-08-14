@@ -1,28 +1,26 @@
 <aside class="left-panel">
-  <h2 class="panel-title">
-    Views
-  </h2>
+  <h2 class="panel-title">Views</h2>
   <hr class="divider" />
   <nav class="view-menu">
-    <a href="#" class="view-item active">
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee7e3e6176760d94f9d05b21cedb2a69ff2c7da398d57e045824f95a1fb3b228?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="view-icon" />
-      Unsolved tickets
+    <a routerLink="tickets/open" routerLinkActive="active" class="view-item">
+      <i class="pi pi-ticket"></i>
+      Open tickets
     </a>
-    <a href="#" class="view-item">
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/59853f8e5fd1f7823971b6d180fe38a51715a78f00d8131a06bffb9b07813eab?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="view-icon" />
-      Unassigned tickets
+    <a routerLink="tickets/assigned" routerLinkActive="active" class="view-item">
+      <i class="pi pi-bell"></i>
+      Assigned tickets
     </a>
-    <a href="#" class="view-item">
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b8c891f5e8d555b826dc12f2ff4c3d143cfd42e9c40b54740f495d6352313e9?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="view-icon" />
-      Pending tickets
+    <a routerLink="tickets/in-progress" routerLinkActive="active" class="view-item">
+      <i class="pi pi-sync"></i>
+      In-progress tickets
     </a>
-    <a href="#" class="view-item">
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/313a825893eb394d15817df9ece742a5ca62bc07335c6fd1675f15e4cf891f4e?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="view-icon" />
-      Solved tickets
+    <a routerLink="tickets/resolved" routerLinkActive="active" class="view-item">
+      <i class="pi pi-check-square"></i>
+      Resolved tickets
     </a>
-    <a href="#" class="view-item">
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3f2fbd0d738379ad9b073cf7035bebae5918531c9031dde70bfd9745d19d66b0?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="view-icon" />
-      Deleted tickets
+    <a routerLink="tickets/closed" routerLinkActive="active" class="view-item">
+      <i class="pi pi-lock"></i>
+      Closed tickets
     </a>
   </nav>
 </aside>

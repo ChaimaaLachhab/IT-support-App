@@ -1,0 +1,22 @@
+<div class="dashboard">
+  <app-sidebar/>
+  <main class="main-content">
+    <header class="top-bar">
+      <button class="create-new-btn" (click)="addTeckit()">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1bac1d62cfe8c41f9048345c45f04694ae346b0e86bf3ddbeb9a99f4bc92cb29?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="Plus icon" class="plus-icon" />
+        Add Ticket
+      </button>
+      <div class="user-profile">
+        <a (click)="logout()">
+          <img src="/assets/img/logout.png" alt="User avatar" class="dropdown-icon" width="512"/>
+        </a>
+
+        <div>
+          <img class=" user-avatar" src="https://cdn.builder.io/api/v1/image/assets/TEMP/411333dce038b6303fc1dc41c929bccf624507db214385d0895255cb80b2acb0?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="Dropdown"  />
+        </div>
+      </div>
+    </header>
+    <app-equipment-list/>
+  </main>
+</div>
+<router-outlet/>

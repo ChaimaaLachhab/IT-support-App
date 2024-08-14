@@ -1,1 +1,31 @@
-<p>create-equipment works!</p>
+<form [formGroup]="createEquipmentForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Equipment Name:</label>
+    <input id="name" formControlName="name" type="text">
+  </div>
+
+  <div>
+    <label for="type">Equipment Type:</label>
+    <select id="type" formControlName="type">
+      <option *ngFor="let type of equipmentTypes" [value]="type">
+        {{ type }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="user">User:</label>
+    <select id="user" formControlName="userId">
+      <option *ngFor="let user of users" [value]="user.id">
+        {{ user.username }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="status">Status:</label>
+    <input id="status" formControlName="status" type="text" readonly>
+  </div>
+
+  <button type="submit" [disabled]="createEquipmentForm.invalid">Submit</button>
+</form>

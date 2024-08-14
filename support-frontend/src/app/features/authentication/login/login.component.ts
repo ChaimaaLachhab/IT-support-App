@@ -66,9 +66,11 @@ export class LoginComponent {
               const role = this.jwtService.getUserRole(token);
 
               if (role === 'ADMIN') {
-                this.router.navigate(['/dashboard']);
-              } else if (role === 'TECH' || role === 'USER') {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/admin/dashboard']);
+              } else if (role === 'USER') {
+                this.router.navigate(['/user/dashboard-user']);
+              } else if (role === 'TECH') {
+                this.router.navigate(['/tech/dashboard-tech']);
               } else {
                 console.error('Unknown role:', role);
               }

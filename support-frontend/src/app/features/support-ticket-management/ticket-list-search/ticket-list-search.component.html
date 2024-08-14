@@ -1,15 +1,19 @@
 <section class="ticket-section">
-  <h1 class="section-title">All unsolved tickets (4)</h1>
-  <div class="ticket-actions">
-    <form class="search-form">
-      <label for="search-input" class="visually-hidden">Search tickets</label>
-      <input type="search" (input)="dt.filterGlobal($any($event.target).value, 'contains')" id="search-input" placeholder="Search..." class="search-input" />
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d803074ad70994930af909f3aa0a0176a45a54c4271f650883188ba690745567?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="search-icon" />
-    </form>
-  </div>
+
   <p-table #dt [value]="tickets" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
            [globalFilterFields]="['name','status','userId']" class="ticket-table">
+    <ng-template pTemplate="caption">
+    <h1 class="section-title">All unsolved tickets (4)</h1>
+    <div class="ticket-actions">
+      <form class="search-form">
+        <label for="search-input" class="visually-hidden">Search tickets</label>
+        <input type="search" (input)="dt.filterGlobal($any($event.target).value, 'contains')" id="search-input" placeholder="Search..." class="search-input" />
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d803074ad70994930af909f3aa0a0176a45a54c4271f650883188ba690745567?apiKey=636115f9631f48bf97a296bc25ce3201&" alt="" class="search-icon" />
+      </form>
+    </div>
+    </ng-template>
+
     <ng-template pTemplate="header">
     <tr>
       <th class="status-column"></th>

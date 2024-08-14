@@ -1,7 +1,7 @@
 export abstract class User {
   id: number;
   username: string;
-  password?: string;  // Optionally ignore in JSON serialization
+  password?: string;
   email: string;
   role: string;
 

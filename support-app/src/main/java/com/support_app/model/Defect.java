@@ -34,7 +34,7 @@ public class Defect {
     @ManyToOne
     private SupportTicket supportTickets;
 
-    @OneToMany(mappedBy = "defect")
+    @OneToMany(mappedBy = "defect", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<DefectHistory> history;
     

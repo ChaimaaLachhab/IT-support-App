@@ -5,7 +5,7 @@
   </header>
 
   <section class="signup-content">
-    <h2 class="signup-title">Start your free trial</h2>
+    <h2 class="signup-title">Add new User</h2>
 
     <form class="signup-form" [formGroup]="registerForm" (ngSubmit)="register()">
       <div class="form-group">
@@ -16,9 +16,9 @@
       <div class="form-group form-option">
         <label for="userType" class="form-label">User Type</label>
         <select id="userType" formControlName="userType" class="form-input">
-          <option value="ADMIN" class="form-input">Admin</option>
-          <option value="USER" class="form-input" selected>User</option>
-          <option value="TECH" class="form-input">Technician</option>
+          <option value="admin" class="form-input">Admin</option>
+          <option value="user" class="form-input" selected>User</option>
+          <option value="technician" class="form-input">Technician</option>
         </select>
       </div>
 
@@ -40,10 +40,6 @@
       <button type="submit" class="submit-button" [disabled]="registerForm.invalid">Register</button>
     </form>
 
-    <div class="login-prompt">
-      <p class="login-text">Already using Respondo?</p>
-      <a class="login-link" [routerLink]="['/login']">Log in</a>
-    </div>
   </section>
 
   <footer class="site-footer">

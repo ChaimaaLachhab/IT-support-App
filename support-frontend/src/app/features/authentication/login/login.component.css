@@ -24,9 +24,10 @@
 }
 
 .brand-logo {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   object-fit: contain;
+  margin-bottom: 10px
 }
 
 .welcome-content {
@@ -75,7 +76,7 @@
   border-radius: 6px;
   background-color: #6d31ed;
   color: #fff;
-  width: 108%;
+  width: 100%;
   padding: 10px;
   border: none;
   cursor: pointer;
