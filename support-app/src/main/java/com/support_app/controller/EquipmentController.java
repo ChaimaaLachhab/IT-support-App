@@ -1,6 +1,7 @@
 package com.support_app.controller;
 
 import com.support_app.dto.CreateEquipmentDto;
+import com.support_app.dto.UpdateEquipmentDto;
 import com.support_app.dto.UpdateEquipmentStatusDto;
 import com.support_app.model.Equipment;
 import com.support_app.model.RegularUser;
@@ -41,9 +42,23 @@ public class EquipmentController {
      * @return A ResponseEntity containing the updated Equipment entity.
      * @throws RuntimeException If the equipment does not exist.
      */
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_TECH')")
+    @PutMapping("/updateStatus/{id}")
+    public ResponseEntity<Equipment> updateEquipmentStatus(@RequestBody UpdateEquipmentStatusDto dto) {
+        Equipment updatedEquipment = equipmentService.updateEquipmentStatus(dto);
+        return ResponseEntity.ok(updatedEquipment);
+    }
+
+    /**
+     * Updates the status of an existing piece of equipment.
+     *
+     * @param dto The DTO containing the new status of the equipment.
+     * @return A ResponseEntity containing the updated Equipment entity.
+     * @throws RuntimeException If the equipment does not exist.
+     */
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<Equipment> updateEquipment(@RequestBody UpdateEquipmentStatusDto dto) {
+    public ResponseEntity<Equipment> updateEquipment(@RequestBody UpdateEquipmentDto dto) {
         Equipment updatedEquipment = equipmentService.updateEquipment(dto);
         return ResponseEntity.ok(updatedEquipment);
     }

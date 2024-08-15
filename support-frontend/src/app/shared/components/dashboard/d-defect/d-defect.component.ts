@@ -1,21 +1,23 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ButtonDirective} from "primeng/button";
+import {ButtonDirective, ButtonModule} from "primeng/button";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DropdownModule} from "primeng/dropdown";
 import {InputTextModule} from "primeng/inputtext";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {ConfirmationService, MessageService, PrimeTemplate} from "primeng/api";
 import {Ripple} from "primeng/ripple";
 import {Table, TableModule} from "primeng/table";
 import {TagModule} from "primeng/tag";
 import {ToastModule} from "primeng/toast";
 import {Router} from "@angular/router";
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Defect} from "../../../../core/models/defect.model";
 import {DefectType} from "../../../../core/enums/defect-type";
 import {DefectPriority} from "../../../../core/enums/defect-priority";
 import {DefectService} from "../../../../core/services/defect.service";
 import {UpdateDefectDto} from "../../../../core/dtos/update-defect-dto.dto";
+import {CreateDefectDto} from "../../../../core/dtos/create-defect-dto.dto";
+import {DialogModule} from "primeng/dialog";
 
 @Component({
   selector: 'app-d-defect',
@@ -31,7 +33,12 @@ import {UpdateDefectDto} from "../../../../core/dtos/update-defect-dto.dto";
     TableModule,
     TagModule,
     ToastModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    DialogModule,
+    ButtonModule,
+    InputTextModule,
+    NgForOf
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './d-defect.component.html',
@@ -39,13 +46,15 @@ import {UpdateDefectDto} from "../../../../core/dtos/update-defect-dto.dto";
 })
 export class DDefectComponent  implements  OnInit{
   @ViewChild('dt') dt!: Table;
-
+  visible: boolean = false;
+  createDefectForm!: FormGroup;
   defects: Defect[] = [];
   defectTypes = Object.values(DefectType);
   defectPriorities = Object.values(DefectPriority);
   clonedDefect: { [s: string]: Defect } = {};
 
   constructor(
+    private fb: FormBuilder,
     private defectService: DefectService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -53,6 +62,11 @@ export class DDefectComponent  implements  OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.createDefectForm = this.fb.group({
+      description: ['', Validators.required],
+      type: ['', Validators.required],
+      priority: ['', Validators.required]
+    });
     this.loadDefects();
   }
 
@@ -133,6 +147,33 @@ export class DDefectComponent  implements  OnInit{
     }
   }
 
+  onSubmit() {
+    if (this.createDefectForm.valid) {
+      const formValues = this.createDefectForm.value;
+
+      const newDefect: CreateDefectDto = {
+        description: formValues.description,
+        type: formValues.type,
+        priority: formValues.priority
+      };
+
+      this.defectService.addDefect(newDefect).subscribe(
+        (response: Defect) => {
+          console.log('Defect added successfully:', response);
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Defect added successfully'});
+          this.visible = false;
+          this.loadDefects()
+        },
+        (error) => {
+          console.error('Error adding defect:', error);
+        }
+      );
+    }
+  }
+
+  showDialog() {
+    this.visible = true;
+  }
 
   navigateToCreate(): void {
     this.router.navigate(['/add-defect']);

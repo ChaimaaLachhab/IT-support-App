@@ -58,7 +58,7 @@ export class DUEquipmentComponent implements OnInit {
   }
 
   loadEquipments(): void {
-    this.equipmentService.getAllEquipments().subscribe({
+    this.equipmentService.getAllEquipmentsByUser().subscribe({
       next: equipments => this.equipments = equipments,
       error: () => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to load equipments' })
 

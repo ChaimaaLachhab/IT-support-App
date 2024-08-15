@@ -8,11 +8,24 @@
     <h2 class="signup-title">Add new User</h2>
 
     <form class="signup-form" [formGroup]="registerForm" (ngSubmit)="register()">
+      <!-- Full Name -->
       <div class="form-group">
         <label for="fullName" class="form-label">Full name</label>
-        <input type="text" formControlName="userName" id="fullName" class="form-input" placeholder="First name and last name" required>
+        <input
+          type="text"
+          formControlName="userName"
+          id="fullName"
+          class="form-input"
+          placeholder="First name and last name"
+          required>
+        <div *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched" class="error-message">
+          <small *ngIf="registerForm.get('userName')?.errors?.['required']" class="text-danger">Full name is required.</small>
+          <small *ngIf="registerForm.get('userName')?.errors?.['minlength']" class="text-warning">Full name must be at least 3 characters long.</small>
+          <small *ngIf="registerForm.get('userName')?.errors?.['maxLength']" class="text-warning">Full name cannot be more than 50 characters.</small>
+        </div>
       </div>
 
+      <!-- User Type -->
       <div class="form-group form-option">
         <label for="userType" class="form-label">User Type</label>
         <select id="userType" formControlName="userType" class="form-input">
@@ -20,25 +33,49 @@
           <option value="user" class="form-input" selected>User</option>
           <option value="technician" class="form-input">Technician</option>
         </select>
+        <div *ngIf="registerForm.get('userType')?.invalid && registerForm.get('userType')?.touched" class="error-message">
+          <small *ngIf="registerForm.get('userType')?.errors?.['required']" class="text-danger">User type is required.</small>
+        </div>
       </div>
 
+      <!-- Work Email -->
       <div class="form-group">
         <label for="workEmail" class="form-label">Work email</label>
-        <input type="email" formControlName="email" id="workEmail" class="form-input" placeholder="youremail@company.com" required>
+        <input
+          type="email"
+          formControlName="email"
+          id="workEmail"
+          class="form-input"
+          placeholder="youremail@company.com"
+          required>
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+          <small *ngIf="registerForm.get('email')?.errors?.['required']" class="text-danger">Work email is required.</small>
+          <small *ngIf="registerForm.get('email')?.errors?.['email']" class="text-warning">Please enter a valid email address.</small>
+          <small *ngIf="registerForm.get('email')?.errors?.['pattern']" class="text-warning">Invalid email format.</small>
+        </div>
       </div>
 
-      <div class="info-box">
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/b1d8cec4180c4d6d8975642e4214fee5675e1a91a15596fdb4c4f1263f0eb069?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="" class="info-icon" />
-        <p class="info-text">Use your corporate email to integrate customer emails, existing applications, and invite your team members.</p>
-      </div>
-
+      <!-- Password -->
       <div class="form-group">
         <label for="password" class="form-label">Password</label>
-        <input type="password" formControlName="password" id="password" class="form-input" placeholder="At least 12 characters" required>
+        <input
+          type="password"
+          formControlName="password"
+          id="password"
+          class="form-input"
+          placeholder="At least 12 characters"
+          required>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+          <small *ngIf="registerForm.get('password')?.errors?.['required']" class="text-danger">Password is required.</small>
+          <small *ngIf="registerForm.get('password')?.errors?.['minlength']" class="text-warning">Password must be at least 6 characters long.</small>
+          <small *ngIf="registerForm.get('password')?.errors?.['passwordStrength']" class="text-warning">Password must contain uppercase, lowercase, number, and special character.</small>
+        </div>
       </div>
 
+      <!-- Submit Button -->
       <button type="submit" class="submit-button" [disabled]="registerForm.invalid">Register</button>
     </form>
+
 
   </section>
 

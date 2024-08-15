@@ -1,7 +1,7 @@
 package com.support_app.service;
 
 import com.support_app.exception.UserNotFoundException;
-import com.support_app.model.Defect;
+import com.support_app.mapper.UserAuthMapper;
 import com.support_app.model.User;
 import com.support_app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserAuthMapper userAuthMapper;
 
     public List<User> getAllUser() {
         return userRepository.findAll();

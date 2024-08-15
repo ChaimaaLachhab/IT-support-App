@@ -25,5 +25,14 @@ public interface EquipmentMapper {
     @Mapping(target = "history", ignore = true)
     void updateEquipmentStatusDtoToEquipment(UpdateEquipmentStatusDto dto, @MappingTarget Equipment equipment);
 
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "type", target = "type")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "userId", target = "user.id")
+    @Mapping(target = "supportTickets", ignore = true)
+    @Mapping(target = "history", ignore = true)
+    void updateEquipmentDtoToEquipment(UpdateEquipmentDto dto, @MappingTarget Equipment equipment);
+
 
 }

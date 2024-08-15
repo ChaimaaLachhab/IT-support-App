@@ -7,6 +7,7 @@ import {Equipment} from "../models/equipment.model";
 import {UpdateEquipmentStatusDto} from "../dtos/update-equipment-status-dto.dto";
 import {RegularUser} from "../models/regular-user.model";
 import {environment} from "../../../environments/environment";
+import {UpdateEquipmentDto} from "../dtos/update-equipment-dto.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class EquipmentService {
   }
 
   updateEquipment(dto: UpdateEquipmentStatusDto): Observable<Equipment> {
+    return this.http.put<Equipment>(`${this.apiUrl}/updateStatus/${dto.id}`, dto);
+  }
+
+  updateEquipmentall(dto: UpdateEquipmentDto): Observable<Equipment> {
     return this.http.put<Equipment>(`${this.apiUrl}/update/${dto.id}`, dto);
   }
 

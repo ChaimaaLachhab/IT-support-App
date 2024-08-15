@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Router, RouterOutlet} from "@angular/router";
 import {SidebarComponent} from "../dashboard/sidebar/sidebar.component";
 import {EquipmentListComponent} from "../../../features/equipment-management/equipment-list/equipment-list.component";
+import {TSidebarComponent} from "./t-sidebar/t-sidebar.component";
 
 @Component({
   selector: 'app-dashboard-tech',
@@ -9,7 +10,8 @@ import {EquipmentListComponent} from "../../../features/equipment-management/equ
   imports: [
     RouterOutlet,
     SidebarComponent,
-    EquipmentListComponent
+    EquipmentListComponent,
+    TSidebarComponent
   ],
   templateUrl: './dashboard-tech.component.html',
   styleUrl: './dashboard-tech.component.css'

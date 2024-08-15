@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgForOf} from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { TableModule, Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -13,8 +13,14 @@ import {TagModule} from "primeng/tag";
 import {EquipmentService} from "../../../../core/services/equipment.service";
 import {Equipment} from "../../../../core/models/equipment.model";
 import {EquipmentStatus} from "../../../../core/enums/equipment-status";
-import {UpdateEquipmentStatusDto} from "../../../../core/dtos/update-equipment-status-dto.dto";
-
+import {EquipmentType} from "../../../../core/enums/equipment-type";
+import {User} from "../../../../core/models/user.model";
+import {UserService} from "../../../../core/services/user.service";
+import {UpdateEquipmentDto} from "../../../../core/dtos/update-equipment-dto.dto";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {CreateEquipmentDto} from "../../../../core/dtos/create-equipment-dto.dto";
+import { Location } from '@angular/common';
+import {DialogModule} from "primeng/dialog";
 
 @Component({
   selector: 'app-d-equipment',
@@ -29,7 +35,12 @@ import {UpdateEquipmentStatusDto} from "../../../../core/dtos/update-equipment-s
     ConfirmDialogModule,
     Ripple,
     PaginatorModule,
-    TagModule
+    TagModule,
+    ReactiveFormsModule,
+    DialogModule,
+    ButtonModule,
+    InputTextModule,
+    NgForOf
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './d-equipment.component.html',
@@ -37,24 +48,43 @@ import {UpdateEquipmentStatusDto} from "../../../../core/dtos/update-equipment-s
 })
 export class DEquipmentComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
-
+  visible: boolean = false;
+  createEquipmentForm!: FormGroup;
+  users: User[] = [];
   equipments: Equipment[] = [];
   statuses = Object.values(EquipmentStatus);
+  types = Object.values(EquipmentType);
   clonedEquipment: { [s: string]: Equipment } = {};
 
   constructor(
+    private fb: FormBuilder,
     private equipmentService: EquipmentService,
+    private userService: UserService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
+    this.createEquipmentForm = this.fb.group({
+      name: ['', Validators.required],
+      type: ['', Validators.required],
+      status: [{ value: EquipmentStatus.ACTIVE, disabled: true }],
+      userId: ['', Validators.required]
+    });
     this.loadEquipments();
+    this.loadUsers();
   }
 
   onNumber() : number{
     return this.equipments.length;
+  }
+
+  loadUsers() {
+    this.userService.getAllUsers().subscribe((users) => {
+      this.users = users;
+    });
   }
 
   loadEquipments(): void {
@@ -71,12 +101,15 @@ export class DEquipmentComponent implements OnInit {
 
   onRowEditSave(equipment: Equipment) {
     if (equipment.id > 0) {
-      const dto: UpdateEquipmentStatusDto = {
+      const dto: UpdateEquipmentDto = {
         id: equipment.id,
-        status: equipment.status
+        name: equipment.name,
+        type: equipment.type,
+        status: equipment.status,
+        userId: equipment.user.id
       };
 
-      this.equipmentService.updateEquipment(dto).subscribe({
+      this.equipmentService.updateEquipmentall(dto).subscribe({
         next: (updatedEquipment) => {
           this.equipments[this.equipments.findIndex(e => e.id === equipment.id)] = updatedEquipment;
           delete this.clonedEquipment[equipment.id];
@@ -114,6 +147,52 @@ export class DEquipmentComponent implements OnInit {
     }
   }
 
+  getTypes(status: EquipmentType): 'success' | 'secondary' | 'info' | 'warning' | 'danger' | undefined {
+    switch (status) {
+      case EquipmentType.COMPUTER:
+        return 'success';
+      case EquipmentType.MOBILE_DEVICE:
+        return 'secondary';
+      case EquipmentType.PRINTER:
+        return 'warning';
+      case EquipmentType.SERVER:
+        return 'info';
+      case EquipmentType.ROUTER:
+        return 'danger';
+      case EquipmentType.OTHER:
+        return 'danger';
+      default:
+        return undefined;
+    }
+  }
+
+  onSubmit() {
+    if (this.createEquipmentForm.valid) {
+      const formValues = this.createEquipmentForm.value;
+
+      const newEquipment: CreateEquipmentDto = {
+        name: formValues.name,
+        type: formValues.type,
+        status: EquipmentStatus.ACTIVE,
+        userId: formValues.userId
+      };
+
+      this.equipmentService.addEquipment(newEquipment).subscribe(
+        (response: Equipment) => {
+          console.log('Equipment added successfully:', response);
+          this.visible = false;
+          this.loadEquipments();
+        },
+        (error) => {
+          console.error('Error adding equipment:', error);
+        }
+      );
+    }
+  }
+
+  showDialog() {
+    this.visible = true;
+  }
 
   navigateToCreate(): void {
     this.router.navigate(['/add-equipment']);

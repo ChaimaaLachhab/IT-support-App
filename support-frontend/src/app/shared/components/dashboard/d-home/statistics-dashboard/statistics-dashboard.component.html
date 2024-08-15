@@ -7,28 +7,78 @@
       <div class="stat-card total-solved">
         <div class="stat-content">
           <h3 class="stat-title">Total tickets solved</h3>
-          <p class="stat-value">164</p>
+          <p class="stat-value">{{ onSolvedNumber() }}</p>
         </div>
         <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ee69ef1d22fe700fb6a43052aeae7d9ac6f1a548522cba304a8826950f6ae20?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="Total solved graph" class="stat-graph" />
       </div>
       <div class="stat-card good-tickets">
         <div class="stat-content">
           <h3 class="stat-title">Good tickets</h3>
-          <p class="stat-value">159</p>
+          <p class="stat-value">{{onGoodNumber()}}</p>
         </div>
         <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/18f32000d0e32cac7bde0da59235eac5d2a2ab241b79104611cc015b76c0dc76?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="Good tickets graph" class="stat-graph" />
       </div>
       <div class="stat-card bad-tickets">
         <div class="stat-content">
           <h3 class="stat-title">Assigned tickets</h3>
-          <p class="stat-value">5</p>
+          <p class="stat-value">{{onClosedNumber()}}</p>
         </div>
         <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ccacc750840be90566121798f9fba800dfadd34a3d756d44eda4a65a4a50a87d?placeholderIfAbsent=true&apiKey=636115f9631f48bf97a296bc25ce3201" alt="Bad tickets graph" class="stat-graph" />
       </div>
     </div>
   </div>
   <div class="tickets-section">
-    <h2 class="section-title">My tickets</h2>
-    <app-ticket-list></app-ticket-list>
+    <div class="equipment-list-container">
+      <div class="header">
+        <h1 style="font-size: 1.5rem; font-weight: 1000;">All Support Tickets ({{onNumber()}})</h1>
+      </div>
+
+      <p-table #dt [value]="tickets" dataKey="id" editMode="row" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+               [globalFilterFields]="['description', 'status', 'user.username', 'technician.username', 'equipment.name']">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="m-0">Manage Support Tickets</h5>
+            <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." />
+        </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id"># <p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="creationDate">Creation Date <p-sortIcon field="creationDate"></p-sortIcon></th>
+            <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+            <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+            <th pSortableColumn="user.username">User <p-sortIcon field="user.username"></p-sortIcon></th>
+            <th pSortableColumn="technician.username">Technician <p-sortIcon field="technician.username"></p-sortIcon></th>
+            <th pSortableColumn="equipment.name">Equipment <p-sortIcon field="equipment.name"></p-sortIcon></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="ticket">
+            <td>{{ticket.id}}</td>
+            <td>{{ticket.creationDate | date:'short'}}</td>
+            <td>{{ticket.description}}</td>
+            <td>
+                <ng-template pTemplate="output">
+                  <p-tag
+                    [value]="ticket.status"
+                    [severity]="getSeverity(ticket.status)">
+                  </p-tag>
+                </ng-template>
+            </td>
+            <td>{{ticket.user.username}}</td>
+            <td>{{ticket.technician.username}}</td>
+            <td>{{ticket.equipment.name}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    <p-toast></p-toast>
+
   </div>
 </section>

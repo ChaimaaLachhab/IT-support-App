@@ -18,7 +18,7 @@ export class SupportTicketService {
 
   constructor(private http: HttpClient) { }
 
-  createTicket(dto: CreateSupportTicketDto, user: User): Observable<SupportTicket> {
+  createTicket(dto: CreateSupportTicketDto): Observable<SupportTicket> {
     return this.http.post<SupportTicket>(`${this.apiUrl}/add`, dto);
   }
 
@@ -30,8 +30,8 @@ export class SupportTicketService {
     return this.http.get<SupportTicket[]>(`${this.apiUrl}/all`);
   }
 
-  getTicketsByTechnician(technicianId: number): Observable<SupportTicket[]> {
-    return this.http.get<SupportTicket[]>(`${this.apiUrl}/technician/${technicianId}`);
+  getTicketsByTechnician(): Observable<SupportTicket[]> {
+    return this.http.get<SupportTicket[]>(`${this.apiUrl}/technician`);
   }
 
   getTicketsByUser(): Observable<SupportTicket[]> {

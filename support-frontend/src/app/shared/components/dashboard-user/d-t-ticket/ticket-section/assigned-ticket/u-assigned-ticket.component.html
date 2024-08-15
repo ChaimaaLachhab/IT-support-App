@@ -1,0 +1,62 @@
+<div class="equipment-list-container">
+  <div class="header">
+    <h1 style="font-size: 1.5rem; font-weight: 1000;">All Assigned Tickets ({{onNumber()}})</h1>
+  </div>
+
+  <p-table #dt [value]="tickets" dataKey="id" editMode="row" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+           [globalFilterFields]="['description', 'status', 'user.username', 'technician.username', 'equipment.name']">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="m-0">Manage Support Tickets</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id"># <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="creationDate">Creation Date <p-sortIcon field="creationDate"></p-sortIcon></th>
+        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+        <th pSortableColumn="user.username">User <p-sortIcon field="user.username"></p-sortIcon></th>
+        <th pSortableColumn="technician.username">Technician <p-sortIcon field="technician.username"></p-sortIcon></th>
+        <th pSortableColumn="equipment.name">Equipment <p-sortIcon field="equipment.name"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ticket let-ri="rowIndex">
+      <tr [pEditableRow]="ticket">
+        <td>{{ri}}</td>
+        <td>{{ticket.creationDate | date:'short'}}</td>
+        <td>{{ticket.description}}</td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-dropdown
+                [options]="statuses"
+                appendTo="body"
+                [(ngModel)]="ticket.status"
+                [style]="{'width':'100%'}">
+              </p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="output">
+              <p-tag
+                [value]="ticket.status"
+                [severity]="getSeverity(ticket.status)">
+              </p-tag>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>{{ticket.user.username}}</td>
+        <td>{{ticket.technician.username}}</td>
+        <td>{{ticket.equipment.name}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-toast></p-toast>

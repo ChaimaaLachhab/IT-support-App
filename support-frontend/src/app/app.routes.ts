@@ -34,8 +34,36 @@ import {
   CreateSupportTicketComponent
 } from "./features/support-ticket-management/create-support-ticket/create-support-ticket.component";
 import {DUEquipmentComponent} from "./shared/components/dashboard-user/d-u-equipment/d-u-equipment.component";
-import {DUTicketComponent} from "./shared/components/dashboard-user/d-u-ticket/d-u-ticket.component";
 import {DTTicketComponent} from "./shared/components/dashboard-tech/d-t-ticket/d-t-ticket.component";
+import {DTHomeComponent} from "./shared/components/dashboard-tech/d-t-home/d-t-home.component";
+import {
+  TAssignedTicketComponent
+} from "./shared/components/dashboard-tech/d-t-ticket/ticket-section/assigned-ticket/t-assigned-ticket.component";
+import {
+  TInProgressTicketComponent
+} from "./shared/components/dashboard-tech/d-t-ticket/ticket-section/in-progress-ticket/t-in-progress-ticket.component";
+import {
+  TOpenTicketComponent
+} from "./shared/components/dashboard-tech/d-t-ticket/ticket-section/open-ticket/t-open-ticket.component";
+import {
+  TResolvedTicketComponent
+} from "./shared/components/dashboard-tech/d-t-ticket/ticket-section/resolved-ticket/t-resolved-ticket.component";
+import {DUTicketComponent} from "./shared/components/dashboard-user/d-t-ticket/d-u-ticket.component";
+import {
+  UInProgressTicketComponent
+} from "./shared/components/dashboard-user/d-t-ticket/ticket-section/in-progress-ticket/u-in-progress-ticket.component";
+import {
+  UOpenTicketComponent
+} from "./shared/components/dashboard-user/d-t-ticket/ticket-section/open-ticket/u-open-ticket.component";
+import {
+  UResolvedTicketComponent
+} from "./shared/components/dashboard-user/d-t-ticket/ticket-section/resolved-ticket/u-resolved-ticket.component";
+import {
+  UClosedTicketComponent
+} from "./shared/components/dashboard-user/d-t-ticket/ticket-section/closed-ticket/u-closed-ticket.component";
+import {
+  UAssignedTicketComponent
+} from "./shared/components/dashboard-user/d-t-ticket/ticket-section/assigned-ticket/u-assigned-ticket.component";
 
 let AdminComponent;
 export const routes: Routes = [
@@ -144,7 +172,7 @@ export const routes: Routes = [
       },
       {
         path: 'home',
-        component: DashboardUserComponent,
+        component: DHomeComponent,
         canActivate: [authGuard, roleGuard(['USER'])]
       },
       {
@@ -156,6 +184,39 @@ export const routes: Routes = [
         path: 'views',
         component: DUTicketComponent,
         canActivate: [authGuard, roleGuard(['USER'])],
+        children: [
+          {
+            path: '',
+            redirectTo: 'tickets/open',
+            pathMatch: 'full'
+          },
+          {
+            path: 'tickets/assigned',
+            component: UAssignedTicketComponent,
+            canActivate: [authGuard, roleGuard(['USER'])]
+          },
+          {
+            path: 'tickets/closed',
+            component: UClosedTicketComponent,
+            canActivate: [authGuard, roleGuard(['USER'])]
+          },
+          {
+            path: 'tickets/in-progress',
+            component: UInProgressTicketComponent,
+            canActivate: [authGuard, roleGuard(['USER'])]
+          },
+          {
+            path: 'tickets/open',
+            component: UOpenTicketComponent,
+            canActivate: [authGuard, roleGuard(['USER'])]
+          },
+          {
+            path: 'tickets/resolved',
+            component: UResolvedTicketComponent,
+            canActivate: [authGuard, roleGuard(['USER'])]
+          }
+        ]
+
       }
     ]
   },
@@ -173,7 +234,7 @@ export const routes: Routes = [
       },
       {
         path: 'home',
-        component: DashboardTechComponent,
+        component: DTHomeComponent,
         canActivate: [authGuard, roleGuard(['TECH'])]
       },
       {
@@ -185,6 +246,38 @@ export const routes: Routes = [
         path: 'views',
         component: DTTicketComponent,
         canActivate: [authGuard, roleGuard(['TECH'])],
+        children: [
+          {
+            path: '',
+            redirectTo: 'tickets/open',
+            pathMatch: 'full'
+          },
+          {
+            path: 'tickets/assigned',
+            component: TAssignedTicketComponent,
+            canActivate: [authGuard, roleGuard(['TECH'])]
+          },
+          {
+            path: 'tickets/closed',
+            component: TAssignedTicketComponent,
+            canActivate: [authGuard, roleGuard(['TECH'])]
+          },
+          {
+            path: 'tickets/in-progress',
+            component: TInProgressTicketComponent,
+            canActivate: [authGuard, roleGuard(['TECH'])]
+          },
+          {
+            path: 'tickets/open',
+            component: TOpenTicketComponent,
+            canActivate: [authGuard, roleGuard(['TECH'])]
+          },
+          {
+            path: 'tickets/resolved',
+            component: TResolvedTicketComponent,
+            canActivate: [authGuard, roleGuard(['TECH'])]
+          }
+        ]
       }
     ]
   },

@@ -1,6 +1,7 @@
 package com.support_app.service;
 
 import com.support_app.dto.CreateEquipmentDto;
+import com.support_app.dto.UpdateEquipmentDto;
 import com.support_app.dto.UpdateEquipmentStatusDto;
 import com.support_app.exception.EquipmentNotFoundException;
 import com.support_app.exception.UserNotFoundException;
@@ -47,10 +48,24 @@ public class EquipmentService {
      * @return The updated Equipment entity.
      * @throws EquipmentNotFoundException If the equipment does not exist.
      */
-    public Equipment updateEquipment(UpdateEquipmentStatusDto equipmentDto) {
+    public Equipment updateEquipmentStatus(UpdateEquipmentStatusDto equipmentDto) {
         Equipment equipment = equipmentRepository.findById(equipmentDto.getId())
                 .orElseThrow(() -> new EquipmentNotFoundException(equipmentDto.getId()));
         equipmentMapper.updateEquipmentStatusDtoToEquipment(equipmentDto, equipment);
+        return equipmentRepository.save(equipment);
+    }
+
+    /**
+     * Updates an existing piece of equipment.
+     *
+     * @param equipmentDto The DTO containing the new  equipment.
+     * @return The updated Equipment entity.
+     * @throws EquipmentNotFoundException If the equipment does not exist.
+     */
+    public Equipment updateEquipment(UpdateEquipmentDto equipmentDto) {
+        Equipment equipment = equipmentRepository.findById(equipmentDto.getId())
+                .orElseThrow(() -> new EquipmentNotFoundException(equipmentDto.getId()));
+        equipmentMapper.updateEquipmentDtoToEquipment(equipmentDto, equipment);
         return equipmentRepository.save(equipment);
     }
 

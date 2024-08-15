@@ -70,11 +70,11 @@ public class SupportTicketService {
     /**
      * Retrieves all support tickets assigned to a specific technician.
      *
-     * @param technicianId The ID of the technician.
+     * @param technicianId The object of the technician.
      * @return A list of SupportTicket entities assigned to the technician.
      */
     public List<SupportTicket> getTicketsByTechnician(Long technicianId) {
-        return supportTicketRepository.findByTechnicianId(technicianId);
+        return supportTicketRepository.findSupportTicketsByTechnicianId(technicianId);
     }
 
     public List<SupportTicket> getAllTickets() {

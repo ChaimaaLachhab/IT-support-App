@@ -1,7 +1,47 @@
 <div class="equipment-list-container">
   <div class="header">
     <h1 style="font-size: 1.5rem; font-weight: 1000;">All Equipments ({{onNumber()}})</h1>
-    <button pButton type="button" label="Add Equipment" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreate()"></button>
+<!--    <button pButton type="button" label="Add Equipment" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreate()"></button>-->
+    <p-button (onClick)="showDialog()" label="Add Equipment" icon="pi pi-plus" class="p-button-success" />
+  </div>
+
+  <div class="card flex justify-content-center">
+    <p-dialog header="Create Equipment" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
+      <form [formGroup]="createEquipmentForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="name">Equipment Name:</label>
+          <input id="name" formControlName="name" type="text">
+        </div>
+
+        <div>
+          <label for="type">Equipment Type:</label>
+          <select id="type" formControlName="type">
+            <option *ngFor="let type of types" [value]="type">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label for="user">User:</label>
+          <select id="user" formControlName="userId">
+            <option *ngFor="let user of users" [value]="user.id">
+              {{ user.username }}
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label for="status">Status:</label>
+          <input id="status" formControlName="status" type="text" readonly>
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+          <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+          <p-button label="Submit" type="submit" [disabled]="createEquipmentForm.invalid" />
+        </div>
+      </form>
+    </p-dialog>
   </div>
 
   <p-table #dt [value]="equipments" dataKey="id" editMode="row" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
@@ -22,14 +62,44 @@
         <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
         <th pSortableColumn="type">Type <p-sortIcon field="type"></p-sortIcon></th>
         <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+        <th pSortableColumn="status">User <p-sortIcon field="status"></p-sortIcon></th>
         <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-equipment let-editing="editing" let-ri="rowIndex">
       <tr [pEditableRow]="equipment">
         <td>{{ri}}</td>
-        <td>{{equipment.name}}</td>
-        <td>{{equipment.type}}</td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="equipment.name" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{equipment.name}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-dropdown
+                [options]="types"
+                appendTo="body"
+                [(ngModel)]="equipment.type"
+                [style]="{'width':'100%'}">
+              </p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="output">
+              <p-tag
+                [value]="equipment.type"
+                [severity]="getTypes(equipment.type)">
+              </p-tag>
+            </ng-template>
+          </p-cellEditor>
+        </td>
         <td>
           <p-cellEditor>
             <ng-template pTemplate="input">
@@ -45,6 +115,23 @@
                 [value]="equipment.status"
                 [severity]="getSeverity(equipment.status)">
               </p-tag>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-dropdown
+                [options]="users"
+                optionLabel="username"
+                optionValue="id"
+                appendTo="body"
+                [(ngModel)]="equipment.user.id"
+                [style]="{'width':'100%'}">
+              </p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ equipment.user.username }}
             </ng-template>
           </p-cellEditor>
         </td>

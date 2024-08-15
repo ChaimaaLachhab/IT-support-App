@@ -1,97 +1,116 @@
-import {Component, OnInit} from "@angular/core";
-import {TableModule} from "primeng/table";
-import { MessageService, SelectItem } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import {CommonModule, DatePipe, NgIf} from '@angular/common';
-import { TagModule } from 'primeng/tag';
-import { DropdownModule } from 'primeng/dropdown';
-import {ButtonDirective, ButtonModule} from 'primeng/button';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { TableModule, Table } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import {PaginatorModule} from "primeng/paginator";
-import {ChipsModule} from "primeng/chips";
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import {Ripple} from "primeng/ripple";
+import {PaginatorModule} from "primeng/paginator";
+import {TagModule} from "primeng/tag";
 import {SupportTicket} from "../../../../../../core/models/support-ticket.model";
 import {TicketStatus} from "../../../../../../core/enums/ticket-status";
 import {SupportTicketService} from "../../../../../../core/services/support-ticket.service";
-
+import {UpdateTicketStatusDto} from "../../../../../../core/dtos/update-ticket-status-dto.dto";
 
 @Component({
   selector: 'app-assigned-ticket',
   standalone: true,
   imports: [
-    ToastModule,
+    CommonModule,
+    RouterModule,
     TableModule,
-    DatePipe,
-    PaginatorModule,
-    ChipsModule,
-    NgIf,
-    ButtonDirective,
+    ButtonModule,
+    InputTextModule,
+    ToastModule,
+    ConfirmDialogModule,
     Ripple,
+    PaginatorModule,
     TagModule
   ],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './assigned-ticket.component.html',
-  styleUrl: './assigned-ticket.component.css'
+  styleUrls: ['./assigned-ticket.component.css']
 })
-export class AssignedTicketComponent implements OnInit{
+export class AssignedTicketComponent implements OnInit {
+  @ViewChild('dt') dt!: Table;
+
   tickets: SupportTicket[] = [];
+  statuses = Object.values(TicketStatus);
+  clonedEquipment: { [s: string]: SupportTicket } = {};
 
-  statuses = [
-    { label: 'Open', value: TicketStatus.OPEN },
-    { label: 'Assigned', value: TicketStatus.ASSIGNED },
-    { label: 'In Progress', value: TicketStatus.IN_PROGRESS },
-    { label: 'Resolved', value: TicketStatus.RESOLVED },
-    { label: 'Closed', value: TicketStatus.CLOSED }
-  ];
+  constructor(
+    private supportTicketService: SupportTicketService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private router: Router
+  ) {}
 
-  clonedTickets: { [s: string]: SupportTicket } = {};
+  ngOnInit(): void {
+    this.loadTickets();
+  }
 
-  constructor(private ticketService: SupportTicketService, private messageService: MessageService) {}
+  onNumber() : number{
+    return this.tickets.length;
+  }
 
-  ngOnInit() {
-    this.ticketService.getTicketsByUser().subscribe((data) => {
-      this.tickets = data;
+  loadTickets(): void {
+    this.supportTicketService.getAllTickets().subscribe({
+      next: tickets => this.tickets = tickets.filter(ticket => ticket.status === TicketStatus.ASSIGNED),
+      error: () => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tickets load with success' })
+
     });
   }
 
-  getTicketsCount(): number {
-    return this.tickets.filter(ticket => ticket.status === TicketStatus.ASSIGNED).length;
-  }
-
-  getTickets(): SupportTicket[] {
-    return this.tickets.filter(ticket => ticket.status === TicketStatus.ASSIGNED);
-  }
-
   onRowEditInit(ticket: SupportTicket) {
-    this.clonedTickets[ticket.id] = { ...ticket };
+    this.clonedEquipment[ticket.id] = { ...ticket };
   }
 
   onRowEditSave(ticket: SupportTicket) {
-    delete this.clonedTickets[ticket.id];
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Ticket is updated' });
+    if (ticket.id > 0) {
+      const dto: UpdateTicketStatusDto = {
+        id: ticket.id,
+        status: ticket.status
+      };
+
+      this.supportTicketService.updateTicketStatus(dto).subscribe({
+        next: (updatedEquipment) => {
+          this.tickets[this.tickets.findIndex(e => e.id === ticket
+            .id)] = updatedEquipment;
+          delete this.clonedEquipment[ticket.id];
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: '  Ticket is updated' });
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update   ticket' });
+          this.onRowEditCancel(ticket, this.tickets.findIndex(e => e.id === ticket.id));
+        }
+      });
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid   Ticket' });
+    }
   }
 
   onRowEditCancel(ticket: SupportTicket, index: number) {
-    this.tickets[index] = this.clonedTickets[ticket.id];
-    delete this.clonedTickets[ticket.id];
+    this.tickets[index] = this.clonedEquipment[ticket.id];
+    delete this.clonedEquipment[ticket.id];
   }
 
-  getSeverity(status: TicketStatus): 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' | undefined {
+  getSeverity(status: TicketStatus): 'success' | 'secondary' | 'info' | 'warning' | 'danger' | undefined {
     switch (status) {
-      case TicketStatus.OPEN:
-        return 'info';
-      case TicketStatus.ASSIGNED:
-        return 'secondary';
-      case TicketStatus.IN_PROGRESS:
-        return 'warning';
       case TicketStatus.RESOLVED:
         return 'success';
+      case TicketStatus.IN_PROGRESS:
+        return 'secondary';
+      case TicketStatus.ASSIGNED:
+        return 'warning';
+      case TicketStatus.OPEN:
+        return 'info';
       case TicketStatus.CLOSED:
         return 'danger';
       default:
         return undefined;
     }
   }
-
 }
-
-

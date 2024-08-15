@@ -80,7 +80,7 @@ class EquipmentServiceTest {
         when(equipmentRepository.save(existingEquipment)).thenReturn(updatedEquipment);
 
         // Act
-        Equipment result = equipmentService.updateEquipment(dto);
+        Equipment result = equipmentService.updateEquipmentStatus(dto);
 
         // Assert
         assertNotNull(result);

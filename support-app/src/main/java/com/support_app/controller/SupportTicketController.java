@@ -3,6 +3,7 @@ package com.support_app.controller;
 import com.support_app.dto.CreateSupportTicketDto;
 import com.support_app.dto.UpdateTicketStatusDto;
 import com.support_app.dto.AssignTechnicianDto;
+import com.support_app.model.ITTechnician;
 import com.support_app.model.RegularUser;
 import com.support_app.model.SupportTicket;
 import com.support_app.model.User;
@@ -55,13 +56,13 @@ public class SupportTicketController {
     /**
      * Retrieves all support tickets assigned to a specific technician.
      *
-     * @param technicianId The ID of the technician.
+     * @param technician The authenticated technician whose tickets are being retrieved.
      * @return A list of SupportTicket entities assigned to the technician.
      */
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_TECH')")
-    @GetMapping("/technician/{technicianId}")
-    public ResponseEntity<List<SupportTicket>> getTicketsByTechnician(@PathVariable Long technicianId) {
-        List<SupportTicket> tickets = supportTicketService.getTicketsByTechnician(technicianId);
+    @PreAuthorize("hasAuthority('ROLE_TECH')")
+    @GetMapping("/technician")
+    public ResponseEntity<List<SupportTicket>> getTicketsByTechnician(@AuthenticationPrincipal ITTechnician technician) {
+        List<SupportTicket> tickets = supportTicketService.getTicketsByTechnician(technician.getId());
         return ResponseEntity.ok(tickets);
     }
 
