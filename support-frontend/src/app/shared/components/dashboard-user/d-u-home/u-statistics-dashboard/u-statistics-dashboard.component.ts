@@ -65,12 +65,10 @@ export class UStatisticsDashboardComponent implements OnInit {
 
   loadTickets(): void {
     this.supportTicketService.getTicketsByUser().subscribe({
-      next: tickets => this.tickets = tickets,
-      error: () => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to load equipments' })
-
+      next: tickets => {this.tickets = tickets;
+        console.log(this.tickets);}
     });
   }
-
 
   getSeverity(status: TicketStatus): 'success' | 'secondary' | 'info' | 'warning' | 'danger' | undefined {
     switch (status) {

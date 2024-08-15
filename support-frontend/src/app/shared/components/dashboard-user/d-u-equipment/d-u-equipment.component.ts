@@ -65,38 +65,6 @@ export class DUEquipmentComponent implements OnInit {
     });
   }
 
-  onRowEditInit(equipment: Equipment) {
-    this.clonedEquipment[equipment.id] = { ...equipment };
-  }
-
-  onRowEditSave(equipment: Equipment) {
-    if (equipment.id > 0) {
-      const dto: UpdateEquipmentStatusDto = {
-        id: equipment.id,
-        status: equipment.status
-      };
-
-      this.equipmentService.updateEquipment(dto).subscribe({
-        next: (updatedEquipment) => {
-          this.equipments[this.equipments.findIndex(e => e.id === equipment.id)] = updatedEquipment;
-          delete this.clonedEquipment[equipment.id];
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Equipment is updated' });
-        },
-        error: () => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update equipment' });
-          this.onRowEditCancel(equipment, this.equipments.findIndex(e => e.id === equipment.id));
-        }
-      });
-    } else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid Equipment' });
-    }
-  }
-
-  onRowEditCancel(equipment: Equipment, index: number) {
-    this.equipments[index] = this.clonedEquipment[equipment.id];
-    delete this.clonedEquipment[equipment.id];
-  }
-
   getSeverity(status: EquipmentStatus): 'success' | 'secondary' | 'info' | 'warning' | 'danger' | undefined {
     switch (status) {
       case EquipmentStatus.ACTIVE:
@@ -114,31 +82,4 @@ export class DUEquipmentComponent implements OnInit {
     }
   }
 
-
-  navigateToCreate(): void {
-    this.router.navigate(['/add-equipment']);
-  }
-
-  confirmDelete(equipment: Equipment): void {
-    this.confirmationService.confirm({
-      message: `Are you sure you want to delete the equipment ${equipment.name}?`,
-      accept: () => {
-        this.equipmentService.deleteEquipment(equipment.id!).subscribe({
-          next: () => {
-            this.loadEquipments();
-            this.showSuccess('Equipment deleted successfully');
-          },
-          error: () => this.showError('Failed to delete equipment')
-        });
-      }
-    });
-  }
-
-  private showSuccess(message: string): void {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
-  }
-
-  private showError(message: string): void {
-    this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
-  }
 }

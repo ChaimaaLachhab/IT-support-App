@@ -70,7 +70,6 @@ export const routes: Routes = [
 
   { path: '', redirectTo: 'landingPage', pathMatch: 'full' },
   { path: 'landingPage', component: LandingPageComponent },
-
   { path: 'login', component: LoginComponent },
 
   { path: 'register',

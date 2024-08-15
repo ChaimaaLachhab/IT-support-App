@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
     List<Equipment> findEquipmentByUser(RegularUser user);
-    List<Equipment> findEquipmentByIT(RegularUser user);
 }

@@ -101,14 +101,14 @@ class SupportTicketServiceTest {
         // Arrange
         Long technicianId = 1L;
         List<SupportTicket> tickets = Collections.singletonList(new SupportTicket());
-        when(supportTicketRepository.findByTechnicianId(technicianId)).thenReturn(tickets);
+        when(supportTicketRepository.findSupportTicketsByTechnicianId(technicianId)).thenReturn(tickets);
 
         // Act
         List<SupportTicket> result = supportTicketService.getTicketsByTechnician(technicianId);
 
         // Assert
         assertEquals(tickets.size(), result.size());
-        verify(supportTicketRepository, times(1)).findByTechnicianId(technicianId);
+        verify(supportTicketRepository, times(1)).findSupportTicketsByTechnicianId(technicianId);
     }
 
     @Test

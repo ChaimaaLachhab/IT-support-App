@@ -6,17 +6,19 @@ import {
 } from "../../../../features/equipment-management/create-equipment/create-equipment.component";
 import {ViewPanelComponent} from "./view-panel/view-panel.component";
 import {TicketSectionComponent} from "./ticket-section/ticket-section.component";
+import {UTicketSectionComponent} from "../../dashboard-user/d-t-ticket/ticket-section/u-ticket-section.component";
 
 @Component({
   selector: 'app-d-views',
   standalone: true,
-  imports: [
-    ViewPanelComponent,
-    TicketSectionComponent,
-    AssignedTicketComponent,
-    ClosedTicketComponent,
-    CreateEquipmentComponent
-  ],
+    imports: [
+        ViewPanelComponent,
+        TicketSectionComponent,
+        AssignedTicketComponent,
+        ClosedTicketComponent,
+        CreateEquipmentComponent,
+        UTicketSectionComponent
+    ],
   templateUrl: './d-views.component.html',
   styleUrl: './d-views.component.css'
 })
