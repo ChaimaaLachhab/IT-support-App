@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {Defect} from "../models/defect.model";
 import {CreateDefectDto} from "../dtos/create-defect-dto.dto";
 import {UpdateDefectDto} from "../dtos/update-defect-dto.dto";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../../Marketplace-Artisanat-Marocain/artisanat-frontend/src/environments/environment";
 
 @Injectable({
   providedIn: 'root'

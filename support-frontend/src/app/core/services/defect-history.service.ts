@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {DefectHistory} from "../models/defect-history.model";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../../Marketplace-Artisanat-Marocain/artisanat-frontend/src/environments/environment";
 import {UpdateDefectHistoryStatusDto} from "../dtos/update-defect-history-status-dto.dto";
 
 @Injectable({

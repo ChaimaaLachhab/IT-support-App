@@ -7,7 +7,7 @@ import {SupportTicket} from "../models/support-ticket.model";
 import {User} from "../models/user.model";
 import {AssignTechnicianDto} from "../dtos/assign-technician-dto.dto";
 import {UpdateTicketStatusDto} from "../dtos/update-ticket-status-dto.dto";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../../Marketplace-Artisanat-Marocain/artisanat-frontend/src/environments/environment";
 
 @Injectable({
   providedIn: 'root'

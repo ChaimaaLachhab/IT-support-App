@@ -6,7 +6,7 @@ import {CreateEquipmentDto} from "../dtos/create-equipment-dto.dto";
 import {Equipment} from "../models/equipment.model";
 import {UpdateEquipmentStatusDto} from "../dtos/update-equipment-status-dto.dto";
 import {RegularUser} from "../models/regular-user.model";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../../Marketplace-Artisanat-Marocain/artisanat-frontend/src/environments/environment";
 import {UpdateEquipmentDto} from "../dtos/update-equipment-dto.dto";
 
 @Injectable({

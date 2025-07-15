@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {LoginUserDto} from "../dtos/login-user-dto.dto";
 import {LoginResponse} from "../models/login-response.model";
 import {RegisterUserDto} from "../dtos/register-user-dto.dto";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../../Marketplace-Artisanat-Marocain/artisanat-frontend/src/environments/environment";
 import {JwtService} from "./jwt.service";
 import {Router} from "@angular/router";
 

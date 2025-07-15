@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../../Marketplace-Artisanat-Marocain/artisanat-frontend/src/environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Equipment} from "../models/equipment.model";
